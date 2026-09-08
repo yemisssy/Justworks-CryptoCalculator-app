@@ -43,6 +43,13 @@ const ethQuanityOwned = computed(() => {
 </script>
 
 <template>
+  <header>
+    <h3>Justworks. | Crypto Allocation</h3>
+    <div id="live-coinbase-rate">
+      <icon />
+      <h5>Live Coinbase rates</h5>
+    </div>
+  </header>
   <AmountToAllocate />
   <CryptoQuantity
     :btcAllocatedUSD="btcAllocatedUSD"
