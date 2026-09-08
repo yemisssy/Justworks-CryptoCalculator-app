@@ -32,17 +32,18 @@ const handleHoldingChange = (e) => {
     <div id="holding-amount-field">
       <span class="input-prefix">$</span>
       <input
-        required
         id="holding-input"
         type="number"
         placeholder="10,000"
         :value="holding"
+        :aria-invalid="invalidHolding"
+        :aria-describedby="invalidHolding ? 'invalidholding-error' : undefined"
         @input="handleHoldingChange"
       />
       <span class="input-suffix">USD</span>
     </div>
 
-    <div v-if="invalidHolding" id="invalidholding-error">
+    <div v-if="invalidHolding" id="invalidholding-error" role="alert">
       <span class="alert-icon" aria-hidden="true">!</span>
       <h5>Enter a valid amount greater than $0.</h5>
     </div>

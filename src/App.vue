@@ -7,12 +7,12 @@ import { fetchCryptoRate } from "./ratesApi.js";
 //STATES
 const holding = ref(null);
 const rates = ref({
-  btcRate: null, //Used an object instead of array although they are only two because they are meant to be unqiqe and avoid re-ordering indexing error
+  btcRate: null,
   ethRate: null,
 });
 
-const error = ref(null); //Question: Why is this better to default to null, is it because I am storing the actual error value not the boolean whether or not there is an error
-const lastRefreshed = ref(null); // This should be timestamp, date time format
+const error = ref(null);
+const lastRefreshed = ref(null);
 
 const loadRates = async () => {
   //call fetch function & update rates values
@@ -31,7 +31,6 @@ const loadRates = async () => {
   lastRefreshed.value = new Date();
 };
 
-//UseEffect Equivalent
 onMounted(loadRates);
 
 //Numeric calculations
@@ -47,12 +46,12 @@ const ethAllocatedUSD = computed(() => {
   return holding.value * 0.3;
 });
 
-const btcQuanityOwned = computed(() => {
+const btcQuantityOwned = computed(() => {
   if (!rates.value.btcRate) return null;
   return btcAllocatedUSD.value * rates.value.btcRate;
 });
 
-const ethQuanityOwned = computed(() => {
+const ethQuantityOwned = computed(() => {
   if (!rates.value.ethRate) return null;
   return ethAllocatedUSD.value * rates.value.ethRate;
 });
@@ -83,11 +82,11 @@ const formattedEthAllocatedUSD = computed(() => {
 });
 
 const formattedBtcQuantity = computed(() => {
-  return formatUsdAndDeci(btcQuanityOwned.value, "crypto");
+  return formatUsdAndDeci(btcQuantityOwned.value, "crypto");
 });
 
 const formattedEthQuantity = computed(() => {
-  return formatUsdAndDeci(ethQuanityOwned.value, "crypto");
+  return formatUsdAndDeci(ethQuantityOwned.value, "crypto");
 });
 
 const formattedHolding = computed(() => {
@@ -97,8 +96,8 @@ const formattedHolding = computed(() => {
 
 <template>
   <header>
-    <h3 id="product-title">Justworks. | Crypto Allocation</h3>
-    <div id="live-coinbase-rate">
+    <p id="product-title">Justworks. | Crypto Allocation</p>
+    <div v-if="{ ...rates }" id="live-coinbase-rate">
       <span class="status-dot" aria-hidden="true"></span>
       <h5>Live Coinbase rates</h5>
     </div>
@@ -119,7 +118,9 @@ const formattedHolding = computed(() => {
         The exchange rates couldn't be loaded right now. Your amount is safe —
         try fetching the latest rates again.
       </p>
-      <button @click="loadRates"><span aria-hidden="true">↻</span>Retry</button>
+      <button @click="loadRates" type="button">
+        <span aria-hidden="true">↻</span>Retry
+      </button>
     </div>
     <CryptoQuantity
       v-else

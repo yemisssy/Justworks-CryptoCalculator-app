@@ -1,5 +1,4 @@
 <script setup>
-import { computed } from "vue";
 import BtcQuantityCard from "./QuantityCards/BtcQuantityCard.vue";
 import EthQuantityCard from "./QuantityCards/EthQuantityCard.vue";
 
@@ -14,7 +13,6 @@ const props = defineProps({
   lastRefreshed: Date,
   handleRefresh: Function,
 });
-const emit = defineEmits(["refresh"]);
 </script>
 
 <template>
@@ -52,7 +50,7 @@ const emit = defineEmits(["refresh"]);
         <span class="status-dot" aria-hidden="true"></span>
         Rate Last Refreshed {{ lastRefreshed.toLocaleString() }}
       </h5>
-      <button @click="handleRefresh">
+      <button @click="handleRefresh" type="button">
         <span aria-hidden="true">↻</span> Refresh Rates
       </button>
     </div>
