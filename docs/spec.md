@@ -1,434 +1,349 @@
-# Technical Structure and Data Flow
+# Technical Specification
 
-This is a literal breakdown of how I structured the app and how data moves through it.
+## Overview
 
-The app is small, so I did not add a state library, router, backend, database, or extra architecture that the assignment does not need.
+This is a Vue 3 frontend application that takes a USD amount and calculates a fixed allocation of:
 
----
+- 70% Bitcoin (BTC)
+- 30% Ethereum (ETH)
 
-## 1. Main structure
+It uses live USD-based exchange rates from the Coinbase public API and displays both the USD allocation and the amount of BTC and ETH the user could buy.
 
-```text
-Coinbase API
-     ↓
-ratesApi.js
-     ↓
-   App.vue
-  ↙       ↘
-input     results
-component components
-```
+The application is frontend-only. It does not include a backend, database, authentication, routing, or trading functionality.
 
-A slightly more detailed version:
+## Tech Stack
 
-```text
-User types amount
-      ↓
-AmountToAllocate.vue
-      ↓ emit update:holding
-App.vue
-      ↓
-computed 70 / 30 allocations
-      ↓
-computed BTC / ETH quantities
-      ↓
-formatted display values
-      ↓
-CryptoQuantity.vue
-      ↓
-BTC card + ETH card
-```
+- Vue 3
+- Vite
+- JavaScript
+- CSS
+- Coinbase public exchange-rates API
 
-For rates:
+## Application Structure
 
 ```text
-App.vue mounts / user clicks Refresh / user clicks Retry
-      ↓
-loadRates()
-      ↓
-ratesApi.js
-      ↓
-Coinbase
-      ↓
-BTC + ETH rates or an error
-      ↓
-App.vue
+src/
+├── App.vue
+├── main.js
+├── ratesApi.js
+├── style.css
+└── components/
+    ├── AmountToAllocate.vue
+    ├── CryptoQuantity.vue
+    └── QuantityCards/
+        ├── BtcQuantityCard.vue
+        └── EthQuantityCard.vue
 ```
 
----
-
-## 2. What each file is responsible for
+## Component Responsibilities
 
 ### `App.vue`
 
-I treat `App.vue` as the main source of truth for values used across the page.
+Main application state and shared logic.
 
-It owns:
+Responsible for:
 
-```text
-holding
-btcRate
-ethRate
-error
-lastRefreshed
-```
-
-It also calculates:
-
-```text
-btcAllocatedUSD
-ethAllocatedUSD
-btcQuantityOwned
-ethQuantityOwned
-formatted display values
-```
-
-It decides whether the result section or the API error section should render.
+- USD holding value
+- BTC and ETH rates
+- API error state
+- last-refreshed time
+- 70 / 30 allocation calculations
+- BTC / ETH quantity calculations
+- display formatting
+- deciding whether to show results or the API error state
 
 ### `ratesApi.js`
 
-This file only deals with getting and checking Coinbase data.
+Responsible for the Coinbase request.
 
-It does not know anything about the page layout.
+The request:
 
-It:
-
-```text
-fetches
-checks response.ok
-parses JSON
-gets data.data.rates
-filters to BTC / ETH
-checks both exist
-returns rate or error
-```
+1. calls the Coinbase exchange-rates endpoint
+2. checks that the HTTP response succeeded
+3. parses the JSON response
+4. keeps the BTC and ETH rates
+5. verifies both required rates are present
+6. returns either the rates or an error
 
 ### `AmountToAllocate.vue`
 
-This file owns the input interaction.
+Responsible for:
 
-It has local validation UI and emits a normalized value back to the parent.
-
-```text
-blank           → emit null, no error
-<= 0 / invalid  → emit null, show error
-positive number → emit Number(value), clear error
-```
+- amount input
+- local input validation
+- fixed 70 / 30 allocation display
+- sending a valid numeric amount to `App.vue`
 
 ### `CryptoQuantity.vue`
 
-This file groups the result area.
+Groups the result area and displays:
 
-It receives already-calculated/formatted values and passes coin-specific values to the two card components.
+- Bitcoin result card
+- Ethereum result card
+- total allocated amount
+- last-refreshed information
+- Refresh Rates action
 
-It also shows:
+### `BtcQuantityCard.vue`
 
-- total allocated
-- last refreshed
-- Refresh button
+Displays:
 
-### `BtcQuantityCard.vue` and `EthQuantityCard.vue`
+- Bitcoin allocation percentage
+- allocated USD
+- BTC quantity
+- current BTC price in USD
 
-These components handle the coin-specific display.
+### `EthQuantityCard.vue`
 
-They also invert the raw Coinbase rate so the UI can show the familiar price of one BTC or one ETH in USD.
+Displays:
 
----
+- Ethereum allocation percentage
+- allocated USD
+- ETH quantity
+- current ETH price in USD
 
-## 3. State I store vs values I calculate
+## Data Flow
 
-### Stored state
+### User amount
+
+```text
+User input
+→ AmountToAllocate.vue
+→ App.vue
+→ calculated 70 / 30 values
+→ calculated BTC / ETH quantities
+→ formatted display values
+→ result components
+```
+
+### Exchange rates
+
+```text
+Page mount / Refresh / Retry
+→ loadRates()
+→ ratesApi.js
+→ Coinbase API
+→ BTC + ETH rates or error
+→ App.vue
+```
+
+## State
+
+Stored application state:
 
 ```text
 holding: number | null
-rates.btcRate: number | null
-rates.ethRate: number | null
+
+rates:
+  btcRate: number | null
+  ethRate: number | null
+
 error: Error | null
 lastRefreshed: Date | null
 ```
 
-### Values I do not store separately
+The 70 / 30 allocations and BTC / ETH quantities are calculated from these values rather than stored separately.
+
+## Calculation Logic
+
+The Coinbase USD-base endpoint returns how much of each cryptocurrency $1 USD can buy.
+
+### USD allocation
 
 ```text
-btcAllocatedUSD
-ethAllocatedUSD
-btcQuantityOwned
-ethQuantityOwned
-formatted strings
+BTC allocation = holding × 0.70
+ETH allocation = holding × 0.30
 ```
 
-I calculate these with `computed` because they come directly from the stored values.
-
-That means I only have to update the source values and Vue keeps the results in sync.
-
----
-
-## 4. Calculation direction
-
-Coinbase's USD-base endpoint returns how much of each currency **$1 USD can buy**.
-
-So:
+### Crypto quantity
 
 ```text
-BTC quantity = (holding × 0.70) × BTC rate
-ETH quantity = (holding × 0.30) × ETH rate
+BTC quantity = BTC allocation × BTC rate
+ETH quantity = ETH allocation × ETH rate
 ```
 
-For the current-rate text:
+### Current USD price
+
+To display the USD value of one coin:
 
 ```text
-BTC USD price = 1 ÷ BTC rate
-ETH USD price = 1 ÷ ETH rate
+1 BTC in USD = 1 ÷ BTC rate
+1 ETH in USD = 1 ÷ ETH rate
 ```
 
----
+Numeric values remain numbers during calculation and are formatted only for display.
 
-## 5. Why I validate the response after `response.ok`
+## API Behavior
 
-`response.ok` only tells me the HTTP request succeeded.
+Rates are fetched:
 
-My screen specifically needs BTC and ETH.
+- when the application first mounts
+- when the user selects Refresh Rates
+- when the user retries after an API error
 
-So after parsing the data, I also check:
+The amount entered by the user does not affect the Coinbase request, so changing the amount only recalculates local values.
 
-```text
-Does BTC exist?
-Does ETH exist?
-```
+A successful fetch updates:
 
-If either one is missing, I treat the request as a failure for this app because I cannot calculate the required result correctly.
+- BTC rate
+- ETH rate
+- last-refreshed time
 
----
+A failed fetch updates the API error state and does not update the last-refreshed time.
 
-## 6. Why I keep numbers separate from formatted text
+## Input Rules
 
-My calculation path is:
+### Blank
 
-```text
-number
-→ calculation
-→ number
-→ formatting
-→ text shown in UI
-```
+- treated as an empty state
+- no validation error
+- parent holding is `null`
 
-I do not want this:
+### Positive number
 
-```text
-$7,000.00
-→ remove $ and commas
-→ turn back into a number
-→ continue calculating
-```
+- accepted
+- converted to a number
+- used in the calculations
 
-Keeping raw values numeric makes the logic simpler and reduces formatting-related bugs.
+### Zero or negative number
 
----
+- rejected
+- validation message is shown
+- parent holding remains `null`
 
-## 7. Main UI states
+The input uses `type="number"`, so the browser also prevents normal alphabetic input.
+
+## UI States
 
 ### Empty state
 
-```text
-No positive holding yet
-Result cards still render
-Allocation / quantity values show placeholders
-```
+The result cards remain visible before a valid amount is entered and show placeholder values.
 
-This is not treated as an error.
+### Result state
 
-### Populated state
+A valid positive amount displays:
 
-```text
-Positive holding
-Rates available
-Calculated USD allocations and crypto quantities display
-```
+- 70% BTC USD allocation
+- 30% ETH USD allocation
+- BTC quantity
+- ETH quantity
+- current BTC and ETH prices
+- total allocated amount
 
-### Invalid amount
+### Input error state
 
-```text
-Zero / negative / invalid input
-Local validation appears
-Parent holding becomes null
-```
+Zero and negative values show a validation message.
 
-### Coinbase error
+### API error state
 
-```text
-Request fails or required rates are missing
-Result area is replaced by error UI
-Retry calls the same loadRates function
-```
+If Coinbase cannot be reached or the required rates are unavailable, the normal result area is replaced by an error message and Retry action.
 
----
+## Refresh and Timestamp
 
-## 8. When I fetch
+The same rate-loading function is used for:
 
-I fetch rates:
+- initial fetch
+- Refresh Rates
+- Retry
 
-```text
-1. when the app mounts
-2. when the user clicks Refresh
-3. when the user retries after an API error
-```
+`lastRefreshed` represents the time the application last successfully received and stored rates.
 
-I do not fetch when the holding changes because the holding is not part of the Coinbase request.
+It is not a timestamp returned by Coinbase.
 
----
+## Responsive Layout
 
-## 9. How the live-rate status should be shown
-
-The “Live Coinbase rates” status should only appear when usable BTC and ETH rates are available and there is not currently an API error.
-
-A direct Vue check can be:
-
-```vue
-<div
-  v-if="!error && rates.btcRate && rates.ethRate"
-  id="live-coinbase-rate"
->
-  ...
-</div>
-```
-
-I would not use:
-
-```vue
-v-if="{ ...rates }"
-```
-
-because `{ ...rates }` creates an object, and an object is truthy even if `btcRate` and `ethRate` inside it are still `null`.
-
----
-
-## 10. Responsive layout
+The layout uses two main responsive breakpoints.
 
 ### Desktop
 
 ```text
-[ Amount card ] [ BTC card | ETH card ]
-                [ Total / Refresh       ]
+Amount input | BTC + ETH results
+             | Total / Refresh
 ```
 
-### At 900px and below
+### 900px and below
 
 ```text
-[ Amount card       ]
-[ BTC card | ETH    ]
-[ Total / Refresh   ]
+Amount input
+BTC | ETH
+Total / Refresh
 ```
 
-### At 600px and below
+### 600px and below
 
 ```text
-[ Amount card ]
-[ BTC card    ]
-[ ETH card    ]
-[ Total       ]
-[ Refresh     ]
+Amount input
+BTC
+ETH
+Total
+Refresh
 ```
 
-I chose the breakpoints based on when my actual content started feeling compressed, not because those numbers represent a specific device model.
+The breakpoints were chosen based on where the content stopped fitting comfortably.
 
----
+## Accessibility
 
-## 11. Accessibility structure
+The application includes:
 
-### Input label
+- a label connected to the amount input
+- `aria-invalid` for invalid input
+- `aria-describedby` connecting the input to its validation message
+- `role="alert"` for validation and API errors
+- `aria-hidden="true"` on decorative symbols
+- native `<button>` elements for Retry and Refresh
+- visible keyboard focus using `:focus-visible`
+- semantic page heading structure
 
-```html
-<label for="holding-input">Amount to allocate</label>
-<input id="holding-input" />
-```
+Blank input is intentionally allowed, so native `required` validation is not used.
 
-### Invalid state
+## UI / UX Reference
 
-```vue
-<input
-  :aria-invalid="invalidHolding"
-  :aria-describedby="invalidHolding ? 'invalidholding-error' : undefined"
-/>
-```
-
-### Validation description
-
-```html
-<div id="invalidholding-error" role="alert">
-  Enter a valid amount greater than $0.
-</div>
-```
-
-The `aria-describedby` value is the **ID** of the error element, not the error sentence itself.
-
-### Focus
+The image stored at:
 
 ```text
-:focus         → general focus, including mouse or keyboard
-:focus-visible → browser shows the stronger focus indicator when it is useful,
-                 especially for keyboard navigation
+docs/assets/claude-ui-design-reference.png
 ```
 
-### Decorative icons
+was used as a visual design reference for:
 
-Symbols that do not add extra meaning use:
+- layout
+- spacing
+- card treatment
+- visual hierarchy
+- BTC / ETH color treatment
+- 70 / 30 allocation bar
+- overall financial-tool feel
 
-```html
-aria-hidden="true"
+It is a design reference rather than a screenshot of the final implementation.
+
+Optional controls shown in the reference, such as quick amount buttons, were not included because they were outside the required scope.
+
+## Main Technical Decisions
+
+### Frontend-only implementation
+
+The Coinbase endpoint is public and read-only, so no backend was added for this assignment.
+
+### Computed values
+
+Allocation and quantity values are derived from the current amount and exchange rates rather than stored as separate state.
+
+### Separate BTC and ETH card components
+
+The application supports only two cryptocurrencies, so the coin-specific cards remain separate.
+
+If the application were expanded to support more cryptocurrencies, this would be a good place to introduce a reusable card component driven by configuration data.
+
+### No separate loading screen
+
+During the initial request, the result area remains in its empty presentation rather than introducing another dedicated loading layout.
+
+## Build and Production Check
+
+```bash
+npm install
+npm run build
+npm run preview
 ```
 
----
-
-## 12. Design reference vs final implementation
-
-The saved UI image in `docs/assets/claude-ui-design-reference.png` is a design reference.
-
-It is useful for showing the intended visual direction, but it should not be read as a screenshot proving that every pictured control exists in the app.
-
-For example, it includes quick amount buttons. Those were not part of the required functionality and were intentionally left out of the time-boxed implementation.
-
----
-
-## 13. Decisions and tradeoffs
-
-### Separate BTC and ETH components
-
-**What I chose:** two card components.
-
-**Why:** there are only two coins and it was easier for me to follow while working quickly in a framework I was less familiar with.
-
-**Tradeoff:** there is duplicated markup.
-
-**If the app grew:** I would probably make one reusable card component driven by props or an array of coin configuration.
-
-### Function prop for Refresh
-
-**What I chose:** pass `loadRates` down as a prop.
-
-**Why:** it was direct and easy for me to follow under the time limit.
-
-**Tradeoff:** emitting a refresh event would make the child-to-parent communication style more consistent with the input component and more typical of Vue.
-
-### Direct frontend Coinbase call
-
-**What I chose:** browser → Coinbase directly.
-
-**Why:** public read-only endpoint, no authentication, and no backend requirement.
-
-**Tradeoff:** the frontend depends directly on Coinbase availability and response shape.
-
-### No dedicated loading state
-
-**What I chose:** keep the result cards in their empty presentation during the initial request.
-
-**Why:** fewer states and less extra UI to build/test.
-
-**Tradeoff:** less explicit initial loading feedback.
-
-### No quick amount buttons
-
-**What I chose:** leave them out even though they exist in the design reference.
-
-**Why:** they are a convenience feature, not part of the required calculation flow.
-
-**Tradeoff:** fewer shortcuts for the user, but more time spent on required behavior and quality.
+The production preview should be used for the final manual check before submission.
