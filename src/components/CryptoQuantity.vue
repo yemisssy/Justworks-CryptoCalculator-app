@@ -47,7 +47,10 @@ const currentDate = ref(new Date());
       </div>
     </div>
     <div v-if="lastRefreshed" id="last-refreshed-wrapper">
-      <h5>Rate Last Refreshed {{ lastRefreshed.toLocaleString() }}</h5>
+      <h5>
+        <span class="status-dot" aria-hidden="true"></span>
+        Rate Last Refreshed {{ lastRefreshed.toLocaleString() }}
+      </h5>
       <button @click="handleRefresh">
         <span aria-hidden="true">↻</span> Refresh Rates
       </button>

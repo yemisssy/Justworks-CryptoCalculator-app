@@ -28,7 +28,7 @@ const handleHoldingChange = (e) => {
 </script>
 <template>
   <div class="allocate-amount-wrapper">
-    <label id="amount-label">Amount To Allocate</label>
+    <label id="amount-label" for="holding-input">Amount To Allocate</label>
     <input
       required
       id="holding-input"
@@ -45,8 +45,8 @@ const handleHoldingChange = (e) => {
     <h4 id="split-bar-label">FIXED ALLOCATION</h4>
     <div id="split-bar-content-wrapper">
       <div id="split-bar">
-        <div class="split-bar" id="btc-bar"></div>
-        <div class="split-bar" id="eth-bar"></div>
+        <div class="split-bar-crypto" id="btc-bar"></div>
+        <div class="split-bar-crypto" id="eth-bar"></div>
       </div>
       <div id="split-bar-ratio">
         <div class="bar-ratio" id="btc-usdallocated-percent">

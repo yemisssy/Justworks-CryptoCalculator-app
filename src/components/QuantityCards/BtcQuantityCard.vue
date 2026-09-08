@@ -44,6 +44,6 @@ const formattedBtcPriceInUSD = computed(() => {
       <span class="empty-value">—</span> {{ symbol }}
     </div>
     <hr />
-    <h5>Current Rate 1 {{ symbol }}={{ formattedBtcPriceInUSD }}</h5>
+    <h5>Current Rate 1 {{ symbol }} ={{ formattedBtcPriceInUSD }}</h5>
   </div>
 </template>
