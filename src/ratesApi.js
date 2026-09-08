@@ -17,9 +17,15 @@ export const fetchCryptoRate = async () => {
       //Question: What is the syntax ([key]) inside the filter? is it a shortand?
       Object.entries(allRates).filter(([key]) => selectedRates.includes(key)),
     );
-    console.log(neededRates);
-    return neededRates;
+
+    return {
+      rate: neededRates,
+      error: null,
+    };
   } catch (e) {
-    console.error(e);
+    return {
+      rate: null,
+      error: e,
+    };
   }
 };

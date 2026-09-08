@@ -11,7 +11,8 @@ const props = defineProps({
   btcRate: Number,
   ethRate: Number,
   holding: Number,
-  lastRefreshed: [Date, String],
+  lastRefreshed: Date,
+  handleRefresh: Function,
 });
 const emit = defineEmits(["refresh"]);
 
@@ -47,14 +48,12 @@ const currentDate = ref(new Date());
     </div>
     <div id="last-refreshed-wrapper">
       <div v-if="lastRefreshed">
-        <h5>
-          Rate Last Refreshed {{ lastRefreshed[0] + " " + lastRefreshed[1] }}
-        </h5>
+        <h5>Rate Last Refreshed {{ lastRefreshed }}</h5>
       </div>
       <div v-else>
         <h5>Rate Last Refreshed {{ currentDate.toLocaleString() }}</h5>
       </div>
-      <button>Refresh Rates</button>
+      <button @click="handleRefresh"><icon /> Refresh Rates</button>
     </div>
   </div>
 </template>

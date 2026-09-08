@@ -10,29 +10,35 @@ const rates = ref({
   btcRate: null, //Used an object instead of array although they are only two because they are meant to be unqiqe and avoid re-ordering indexing error
   ethRate: null,
 });
-const loading = ref(false);
+
 const error = ref(null); //Question: Why is this better to default to null, is it because I am storing the actual error value not the boolean whether or not there is an error
 const lastRefreshed = ref(null); // This should be timestamp, date time format
 
-//UseEffect Equivalent
-
-onMounted(async () => {
+const loadRates = async () => {
   //call fetch function & update rates values
   const fetchedRates = await fetchCryptoRate();
+
+  if (fetchedRates.error) {
+    error.value = fetchedRates.error;
+    return;
+  }
+
   rates.value = {
-    btcRate: Number(fetchedRates.BTC),
-    ethRate: Number(fetchedRates.ETH),
+    btcRate: Number(fetchedRates.rate.BTC),
+    ethRate: Number(fetchedRates.rate.ETH),
   };
-});
+};
+//UseEffect Equivalent
+onMounted(loadRates);
 
 const btcAllocatedUSD = computed(() => {
-  if (!holding.value || !rates.value.btcRate) return null; //Question: why return null & not just return?
+  if (!holding.value) return null; //Question: why return null & not just return?
 
   return holding.value * 0.7;
 });
 
 const ethAllocatedUSD = computed(() => {
-  if (!holding.value || !rates.value.ethRate) return null;
+  if (!holding.value) return null;
 
   return holding.value * 0.3;
 });
@@ -57,7 +63,19 @@ const ethQuanityOwned = computed(() => {
     </div>
   </header>
   <AmountToAllocate :holding="holding" @update:holding="holding = $event" />
+  <div v-if="error" id="api-error-div">
+    <div id="error-message-div">
+      <icon />
+      <h4>We couldn't reach Coinbase</h4>
+    </div>
+    <p>
+      The exchange rates couldn't be loaded right now. Your amount is safe — try
+      fetching the latest rates again.
+    </p>
+    <button @click="loadRates"><icon /> Retry</button>
+  </div>
   <CryptoQuantity
+    v-else
     :btcAllocatedUSD="btcAllocatedUSD"
     :btcQuantityOwned="btcQuanityOwned"
     :ethAllocatedUSD="ethAllocatedUSD"
@@ -66,6 +84,7 @@ const ethQuanityOwned = computed(() => {
     :ethRate="rates.ethRate"
     :lastRefreshed="lastRefreshed"
     :holding="holding"
+    :handleRefresh="loadRates"
   />
   <h5>
     Exchange rates are retrieved from the public Coinbase API; the timestamp
