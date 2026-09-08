@@ -40,7 +40,7 @@ const handleHoldingChange = (e) => {
         :aria-describedby="invalidHolding ? 'invalidholding-error' : undefined"
         @input="handleHoldingChange"
       />
-      <span class="input-suffix">USD</span>
+      <span class="input-suffix abbreviations">USD</span>
     </div>
 
     <div v-if="invalidHolding" id="invalidholding-error" role="alert">

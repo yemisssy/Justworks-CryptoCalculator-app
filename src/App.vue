@@ -97,7 +97,10 @@ const formattedHolding = computed(() => {
 <template>
   <header>
     <p id="product-title">Justworks. | Crypto Allocation</p>
-    <div v-if="{ ...rates }" id="live-coinbase-rate">
+    <div
+      v-if="!error && rates.btcRate && rates.ethRate"
+      id="live-coinbase-rate"
+    >
       <span class="status-dot" aria-hidden="true"></span>
       <h5>Live Coinbase rates</h5>
     </div>

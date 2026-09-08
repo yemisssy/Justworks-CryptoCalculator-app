@@ -44,11 +44,16 @@ const formattedEthPriceInUSD = computed(() => {
     <div v-else class="crypto-holding-value">
       <span class="empty-value">—</span>
       <div class="crypto-empty-quantity">
-        <span class="empty-value">—</span>
-        <span>{{ symbol }}</span>
+        <span class="empty-value" id="eth-crypto-empty-quantity">—</span>
+        <span class="abbreviations">{{ symbol }}</span>
       </div>
     </div>
     <hr />
-    <h5>Current Rate 1 {{ symbol }} = {{ formattedEthPriceInUSD }}</h5>
+    <div class="current-rate-statement">
+      <h5>Current Rate 1</h5>
+      <h5 class="btc-eth-current-rate">
+        {{ symbol }} = {{ formattedEthPriceInUSD }}
+      </h5>
+    </div>
   </div>
 </template>
