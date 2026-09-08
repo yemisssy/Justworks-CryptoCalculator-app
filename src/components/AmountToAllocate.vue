@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from "vue";
 const props = defineProps({
   holding: Number,
 });
@@ -9,10 +10,22 @@ const emit = defineEmits(["update:holding"]);
 
 const handleHoldingChange = (e) => {
   console.log(e.target.value);
-  if (e.target.value <= 0 || isNaN(Number(e.target.value))) {
-    invalidHolding.value = true;
+  const value = e.target.value;
+
+  if (value === "") {
+    invalidHolding.value = false;
+    emit("update:holding", null);
+    return;
   }
+
+  if (Number(value) <= 0 || isNaN(Number(value))) {
+    invalidHolding.value = true;
+  } else {
+    invalidHolding.value = false;
+  }
+
   emit("update:holding", Number(e.target.value));
+  // invalidHolding.value = false;
 };
 </script>
 <template>
