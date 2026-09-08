@@ -99,6 +99,11 @@ const formattedEthQuantity = computed(() => {
       <h5>Live Coinbase rates</h5>
     </div>
   </header>
+  <h1>Allocate your USD across Bitcoin & Ethereum</h1>
+  <p>
+    Enter an amount and we'll split it with a fixed 70 / 30 ratio — 70% to
+    Bitcoin, 30% to Ethereum — using live Coinbase exchange rates.
+  </p>
   <AmountToAllocate :holding="holding" @update:holding="holding = $event" />
   <div v-if="error" id="api-error-div">
     <div id="error-message-div">
