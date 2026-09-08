@@ -30,9 +30,11 @@ const loadRates = async () => {
   error.value = null;
   lastRefreshed.value = new Date();
 };
+
 //UseEffect Equivalent
 onMounted(loadRates);
 
+//Numeric calculations
 const btcAllocatedUSD = computed(() => {
   if (!holding.value) return null; //Question: why return null & not just return?
 
@@ -53,6 +55,39 @@ const btcQuanityOwned = computed(() => {
 const ethQuanityOwned = computed(() => {
   if (!rates.value.ethRate) return null;
   return ethAllocatedUSD.value * rates.value.ethRate;
+});
+
+//Formmatting Function
+const formatUsdAndDeci = (value, type) => {
+  if (value === null) return null;
+
+  if (type === "crypto") {
+    return value.toLocaleString("en-US", {
+      maximumFractionDigits: 8,
+    });
+  }
+
+  return value.toLocaleString("en-us", {
+    style: "currency",
+    currency: "USD",
+  });
+};
+
+//Formatted values
+const formattedBtcAllocatedUSD = computed(() => {
+  return formatUsdAndDeci(btcAllocatedUSD.value, "usd");
+});
+
+const formattedEthAllocatedUSD = computed(() => {
+  return formatUsdAndDeci(ethAllocatedUSD.value, "usd");
+});
+
+const formattedBtcQuantity = computed(() => {
+  return formatUsdAndDeci(btcQuanityOwned.value, "crypto");
+});
+
+const formattedEthQuantity = computed(() => {
+  return formatUsdAndDeci(ethQuanityOwned.value, "crypto");
 });
 </script>
 
@@ -78,10 +113,10 @@ const ethQuanityOwned = computed(() => {
   </div>
   <CryptoQuantity
     v-else
-    :btcAllocatedUSD="btcAllocatedUSD"
-    :btcQuantityOwned="btcQuanityOwned"
-    :ethAllocatedUSD="ethAllocatedUSD"
-    :ethQuantityOwned="ethQuanityOwned"
+    :btcAllocatedUSD="formattedBtcAllocatedUSD"
+    :btcQuantityOwned="formattedBtcQuantity"
+    :ethAllocatedUSD="formattedEthAllocatedUSD"
+    :ethQuantityOwned="formattedEthQuantity"
     :btcRate="rates.btcRate"
     :ethRate="rates.ethRate"
     :lastRefreshed="lastRefreshed"

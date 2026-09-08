@@ -9,7 +9,6 @@ const invalidHolding = ref(false);
 const emit = defineEmits(["update:holding"]);
 
 const handleHoldingChange = (e) => {
-  console.log(e.target.value);
   const value = e.target.value;
 
   if (value === "") {
@@ -20,12 +19,11 @@ const handleHoldingChange = (e) => {
 
   if (Number(value) <= 0 || isNaN(Number(value))) {
     invalidHolding.value = true;
+    emit("update:holding", null);
   } else {
     invalidHolding.value = false;
+    emit("update:holding", Number(value));
   }
-
-  emit("update:holding", Number(e.target.value));
-  // invalidHolding.value = false;
 };
 </script>
 <template>

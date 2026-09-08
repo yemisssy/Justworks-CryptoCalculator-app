@@ -4,10 +4,10 @@ import BtcQuantityCard from "./QuantityCards/BtcQuantityCard.vue";
 import EthQuantityCard from "./QuantityCards/EthQuantityCard.vue";
 
 const props = defineProps({
-  btcAllocatedUSD: Number,
-  btcQuantityOwned: Number,
-  ethAllocatedUSD: Number,
-  ethQuantityOwned: Number,
+  btcAllocatedUSD: String,
+  btcQuantityOwned: String,
+  ethAllocatedUSD: String,
+  ethQuantityOwned: String,
   btcRate: Number,
   ethRate: Number,
   holding: Number,
@@ -40,7 +40,7 @@ const currentDate = ref(new Date());
     <div id="total-allocated">
       <h5>Total Allocated</h5>
       <div v-if="holding" class="total-allocated-value">
-        <h4>${{ holding }}</h4>
+        <h4>${{ holding }}.00</h4>
       </div>
       <div v-else class="total-allocated-value">
         <icon />

@@ -3,8 +3,8 @@ import { computed } from "vue";
 const props = defineProps({
   name: String,
   symbol: String,
-  ethAllocatedUSD: Number,
-  ethQuantityOwned: Number,
+  ethAllocatedUSD: String,
+  ethQuantityOwned: String,
   ethRate: Number,
 });
 
@@ -12,6 +12,15 @@ const ethPriceInUSD = computed(() => {
   if (!props.ethRate) return null;
 
   return 1 / props.ethRate;
+});
+
+const formattedEthPriceInUSD = computed(() => {
+  if (ethPriceInUSD.value === null) return null;
+
+  return ethPriceInUSD.value.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
 });
 </script>
 
@@ -27,15 +36,14 @@ const ethPriceInUSD = computed(() => {
     </div>
     <h4>ALLOCATED</h4>
     <div v-if="ethAllocatedUSD" class="crypto-holding-value">
-      <h4>${{ ethAllocatedUSD }} allocated mount here</h4>
-      <h5>{{ ethQuantityOwned }} {{ symbol }} crypto amount & symbol here</h5>
+      <h4>{{ ethAllocatedUSD }}</h4>
+      <h5>{{ ethQuantityOwned }} {{ symbol }}</h5>
     </div>
     <div v-else class="crypto-holding-value">
       <icon />
-      <icon /> {{ symbol }} here should be -- icon & eth symbol since no
-      allocated usd yet
+      <icon /> {{ symbol }}
     </div>
     <hr />
-    <h5>Current Rate 1 {{ symbol }} = ${{ ethPriceInUSD }}</h5>
+    <h5>Current Rate 1 {{ symbol }} = {{ formattedEthPriceInUSD }}</h5>
   </div>
 </template>

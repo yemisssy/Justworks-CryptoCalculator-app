@@ -3,8 +3,8 @@ import { computed } from "vue";
 const props = defineProps({
   name: String,
   symbol: String,
-  btcAllocatedUSD: Number,
-  btcQuantityOwned: Number,
+  btcAllocatedUSD: String,
+  btcQuantityOwned: String,
   btcRate: Number,
 });
 
@@ -12,6 +12,15 @@ const btcPriceInUSD = computed(() => {
   if (!props.btcRate) return null;
 
   return 1 / props.btcRate;
+});
+
+const formattedBtcPriceInUSD = computed(() => {
+  if (btcPriceInUSD.value === null) return null;
+
+  return btcPriceInUSD.value.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
 });
 </script>
 
@@ -27,15 +36,14 @@ const btcPriceInUSD = computed(() => {
     </div>
     <h4>ALLOCATED</h4>
     <div v-if="btcAllocatedUSD" class="crypto-holding-value">
-      <h4>${{ btcAllocatedUSD }} allocated mount here</h4>
-      <h5>{{ btcQuantityOwned }} {{ symbol }} crypto amount & symbol here</h5>
+      <h4>{{ btcAllocatedUSD }}</h4>
+      <h5>{{ btcQuantityOwned }} {{ symbol }}</h5>
     </div>
     <div v-else class="crypto-holding-value">
       <icon />
-      <icon /> {{ symbol }} here should be -- icon & btc symbol since no
-      allocated usd yet
+      <icon /> {{ symbol }}
     </div>
     <hr />
-    <h5>Current Rate 1 {{ symbol }}=${{ btcPriceInUSD }}</h5>
+    <h5>Current Rate 1 {{ symbol }}={{ formattedBtcPriceInUSD }}</h5>
   </div>
 </template>
