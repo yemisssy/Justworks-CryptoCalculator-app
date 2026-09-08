@@ -64,7 +64,6 @@ header {
   display: flex;
   gap: 10px;
   align-items: baseline;
-  /* add flex alignment */
 }
 
 #live-coinbase-rate h5 {
@@ -130,7 +129,8 @@ header {
   background: #f7f9fc;
   border: 2px solid var(--border);
   border-radius: 14px;
-  padding: 14px 16px;
+  padding-left: 46px;
+  padding-right: 70px;
 
   font-family: var(--font-display);
   font-size: clamp(24px, 3vw, 30px);
@@ -151,7 +151,7 @@ header {
 }
 
 .input-prefix {
-  left: 5px;
+  left: 16px;
   font-size: 24px;
   font-weight: 600;
 }
@@ -176,8 +176,9 @@ header {
   font-size: 13px;
   font-weight: 500;
   color: var(--error);
-
-  /* add flex alignment */
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
 }
 
 #invalidholding-error h5 {
@@ -483,6 +484,9 @@ input[type="number"] {
 }
 
 #error-message-div {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
   /* add flex alignment */
 }
 
@@ -581,5 +585,59 @@ input[type="number"] {
 }
 
 /* 12. RESPONSIVE */
-@media (max-width: 768px) {
+
+/* TABLET */
+@media (max-width: 900px) {
+  #crypto-calculator-layout {
+    flex-direction: column;
+  }
+
+  .allocate-amount-wrapper,
+  #crypto-amount-wrapper {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  header {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  #product-title {
+    font-size: 18px;
+  }
+
+  #hero-title {
+    margin-top: 24px;
+  }
+
+  #crypto-amount-result-wrapper {
+    flex-direction: column;
+  }
+
+  .btc-eth-card-wrapper {
+    width: 100%;
+    min-width: 0;
+  }
+
+  #last-refreshed-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  #last-refreshed-wrapper button {
+    width: 100%;
+  }
+
+  #split-bar-ratio {
+    gap: 12px;
+  }
+
+  #footer-disclaimer {
+    max-width: 100%;
+  }
 }
