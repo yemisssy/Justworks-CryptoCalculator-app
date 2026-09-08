@@ -19,22 +19,25 @@ const emit = defineEmits(["refresh"]);
 
 <template>
   <div id="crypto-amount-wrapper">
-    <BtcQuantityCard
-      name="Bitcoin"
-      symbol="BTC"
-      :percentage="70"
-      :btcAllocatedUSD="btcAllocatedUSD"
-      :btcQuantityOwned="btcQuantityOwned"
-      :btcRate="btcRate"
-    />
-    <EthQuantityCard
-      name="Ethereum"
-      symbol="ETH"
-      :percentage="30"
-      :ethAllocatedUSD="ethAllocatedUSD"
-      :ethQuantityOwned="ethQuantityOwned"
-      :ethRate="ethRate"
-    />
+    <div id="crypto-amount-result-wrapper">
+      <BtcQuantityCard
+        name="Bitcoin"
+        symbol="BTC"
+        :percentage="70"
+        :btcAllocatedUSD="btcAllocatedUSD"
+        :btcQuantityOwned="btcQuantityOwned"
+        :btcRate="btcRate"
+      />
+      <EthQuantityCard
+        name="Ethereum"
+        symbol="ETH"
+        :percentage="30"
+        :ethAllocatedUSD="ethAllocatedUSD"
+        :ethQuantityOwned="ethQuantityOwned"
+        :ethRate="ethRate"
+      />
+    </div>
+
     <div id="total-allocated">
       <h5>Total Allocated</h5>
       <div v-if="holding">

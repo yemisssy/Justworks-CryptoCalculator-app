@@ -17,7 +17,6 @@ export const fetchCryptoRate = async () => {
       //Question: What is the syntax ([key]) inside the filter? is it a shortand?
       Object.entries(allRates).filter(([key]) => selectedRates.includes(key)),
     );
-
     if (!neededRates.BTC || !neededRates.ETH) {
       throw new Error("Required BTC and ETH rates were not returned");
     }

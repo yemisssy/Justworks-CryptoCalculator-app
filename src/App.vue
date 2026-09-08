@@ -108,30 +108,33 @@ const formattedHolding = computed(() => {
     Enter an amount and we'll split it with a fixed 70 / 30 ratio — 70% to
     Bitcoin, 30% to Ethereum — using live Coinbase exchange rates.
   </p>
-  <AmountToAllocate :holding="holding" @update:holding="holding = $event" />
-  <div v-if="error" id="api-error-div">
-    <div id="error-message-div">
-      <span class="alert-icon" aria-hidden="true">!</span>
-      <h4>We couldn't reach Coinbase</h4>
+  <div id="crypto-calculator-layout">
+    <AmountToAllocate :holding="holding" @update:holding="holding = $event" />
+    <div v-if="error" id="api-error-div">
+      <div id="error-message-div">
+        <span class="alert-icon" aria-hidden="true">!</span>
+        <h4>We couldn't reach Coinbase</h4>
+      </div>
+      <p>
+        The exchange rates couldn't be loaded right now. Your amount is safe —
+        try fetching the latest rates again.
+      </p>
+      <button @click="loadRates"><span aria-hidden="true">↻</span>Retry</button>
     </div>
-    <p>
-      The exchange rates couldn't be loaded right now. Your amount is safe — try
-      fetching the latest rates again.
-    </p>
-    <button @click="loadRates"><span aria-hidden="true">↻</span>Retry</button>
+    <CryptoQuantity
+      v-else
+      :btcAllocatedUSD="formattedBtcAllocatedUSD"
+      :btcQuantityOwned="formattedBtcQuantity"
+      :ethAllocatedUSD="formattedEthAllocatedUSD"
+      :ethQuantityOwned="formattedEthQuantity"
+      :btcRate="rates.btcRate"
+      :ethRate="rates.ethRate"
+      :lastRefreshed="lastRefreshed"
+      :holding="formattedHolding"
+      :handleRefresh="loadRates"
+    />
   </div>
-  <CryptoQuantity
-    v-else
-    :btcAllocatedUSD="formattedBtcAllocatedUSD"
-    :btcQuantityOwned="formattedBtcQuantity"
-    :ethAllocatedUSD="formattedEthAllocatedUSD"
-    :ethQuantityOwned="formattedEthQuantity"
-    :btcRate="rates.btcRate"
-    :ethRate="rates.ethRate"
-    :lastRefreshed="lastRefreshed"
-    :holding="formattedHolding"
-    :handleRefresh="loadRates"
-  />
+
   <h5>
     Exchange rates are retrieved from the public Coinbase API; the timestamp
     reflects when this app last fetched them. For demonstration only — not

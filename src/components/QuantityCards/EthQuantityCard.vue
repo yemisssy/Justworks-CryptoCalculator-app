@@ -27,10 +27,12 @@ const formattedEthPriceInUSD = computed(() => {
 <template>
   <div class="btc-eth-card-wrapper">
     <div id="eth-card-ledgers">
-      <span class="crypto-icon eth-icon" aria-hidden="true">Ξ</span>
       <div class="btc-eth-names">
-        <h4>{{ name }}</h4>
-        <h4 class="abbreviations">{{ symbol }}</h4>
+        <span class="crypto-icon eth-icon" aria-hidden="true">Ξ</span>
+        <div>
+          <h4>{{ name }}</h4>
+          <h4 class="abbreviations">{{ symbol }}</h4>
+        </div>
       </div>
       <h4>30%</h4>
     </div>
@@ -41,7 +43,10 @@ const formattedEthPriceInUSD = computed(() => {
     </div>
     <div v-else class="crypto-holding-value">
       <span class="empty-value">—</span>
-      <span class="empty-value">—</span> {{ symbol }}
+      <div class="crypto-empty-quantity">
+        <span class="empty-value">—</span>
+        <span>{{ symbol }}</span>
+      </div>
     </div>
     <hr />
     <h5>Current Rate 1 {{ symbol }} = {{ formattedEthPriceInUSD }}</h5>

@@ -29,8 +29,10 @@ const formattedBtcPriceInUSD = computed(() => {
     <div id="btc-card-ledgers">
       <div class="btc-eth-names">
         <span class="crypto-icon btc-icon" aria-hidden="true">₿</span>
-        <h4>Bitcoin</h4>
-        <h4 class="abbreviations">{{ symbol }}</h4>
+        <div>
+          <h4>{{ name }}</h4>
+          <h4 class="abbreviations">{{ symbol }}</h4>
+        </div>
       </div>
       <h4>70%</h4>
     </div>
@@ -41,7 +43,10 @@ const formattedBtcPriceInUSD = computed(() => {
     </div>
     <div v-else class="crypto-holding-value">
       <span class="empty-value">—</span>
-      <span class="empty-value">—</span> {{ symbol }}
+      <div class="crypto-empty-quantity">
+        <span class="empty-value">—</span>
+        <span>{{ symbol }}</span>
+      </div>
     </div>
     <hr />
     <h5>Current Rate 1 {{ symbol }} ={{ formattedBtcPriceInUSD }}</h5>

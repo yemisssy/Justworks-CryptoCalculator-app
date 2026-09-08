@@ -42,7 +42,7 @@ hr {
   margin: 18px 0;
 }
 
-/* 2. HEADER */
+/* 1. HEADER */
 header {
   display: flex;
   justify-content: space-between;
@@ -72,6 +72,12 @@ header h3 {
   font-size: 12px;
   font-weight: 600;
   color: #3a4152;
+}
+
+/* 2. CRYPTO CALCULATOR LAYOUT */
+
+#crypto-calculator-layout {
+  display: flex;
 }
 
 /* 3. INPUT CARD */
@@ -222,7 +228,9 @@ input[type="number"] {
 /* 5. RESULTS LAYOUT */
 #crypto-amount-wrapper {
 }
-
+#crypto-amount-result-wrapper {
+  display: flex;
+}
 /* 6. SHARED RESULT CARDS */
 .btc-eth-card-wrapper {
   background: var(--surface);
@@ -231,6 +239,7 @@ input[type="number"] {
   padding: 22px;
 }
 .btc-eth-names {
+  display: flex;
   /* add flex alignment */
 }
 
@@ -250,7 +259,10 @@ input[type="number"] {
 }
 
 .crypto-holding-value {
-  margin-top: 8px;
+  /* margin-top: 8px; */
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .crypto-holding-value h4 {
@@ -267,6 +279,12 @@ input[type="number"] {
   font-family: var(--font-mono);
   font-size: clamp(16px, 2.1vw, 19px);
   font-weight: 600;
+}
+
+.crypto-empty-quantity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btc-eth-card-wrapper > h4 {
@@ -287,17 +305,13 @@ input[type="number"] {
   color: var(--muted);
 }
 
-.btc-eth-card-wrapper hr {
-  border: 0;
-  border-top: 1px solid #f1f3f8;
-  margin: 18px 0 0;
-}
-
 /* 7. BTC / ETH DIFFERENCES */
 #btc-card-ledgers,
 #eth-card-ledgers {
   padding-top: 14px;
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   /* add flex layout / space-between / align-center */
 }
 
