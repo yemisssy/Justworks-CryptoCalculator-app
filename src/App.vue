@@ -89,6 +89,10 @@ const formattedBtcQuantity = computed(() => {
 const formattedEthQuantity = computed(() => {
   return formatUsdAndDeci(ethQuanityOwned.value, "crypto");
 });
+
+const formattedHolding = computed(() => {
+  return formatUsdAndDeci(holding.value, "usd");
+});
 </script>
 
 <template>
@@ -125,7 +129,7 @@ const formattedEthQuantity = computed(() => {
     :btcRate="rates.btcRate"
     :ethRate="rates.ethRate"
     :lastRefreshed="lastRefreshed"
-    :holding="holding"
+    :holding="formattedHolding"
     :handleRefresh="loadRates"
   />
   <h5>

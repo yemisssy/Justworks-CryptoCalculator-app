@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed } from "vue";
 import BtcQuantityCard from "./QuantityCards/BtcQuantityCard.vue";
 import EthQuantityCard from "./QuantityCards/EthQuantityCard.vue";
 
@@ -10,13 +10,11 @@ const props = defineProps({
   ethQuantityOwned: String,
   btcRate: Number,
   ethRate: Number,
-  holding: Number,
+  holding: String,
   lastRefreshed: Date,
   handleRefresh: Function,
 });
 const emit = defineEmits(["refresh"]);
-
-const currentDate = ref(new Date());
 </script>
 
 <template>
@@ -39,8 +37,8 @@ const currentDate = ref(new Date());
     />
     <div id="total-allocated">
       <h5>Total Allocated</h5>
-      <div v-if="holding" class="total-allocated-value">
-        <h4>${{ holding }}</h4>
+      <div v-if="holding">
+        <h4>{{ holding }}</h4>
       </div>
       <div v-else class="total-allocated-value">
         <span class="empty-value">—</span>

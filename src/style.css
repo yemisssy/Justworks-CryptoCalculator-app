@@ -35,7 +35,7 @@ body {
   margin: 0 auto;
   padding: clamp(18px, 4vw, 44px);
 }
-
+/* all app hr tags */
 hr {
   border: 0;
   border-top: 1px solid #f1f3f8;
@@ -231,57 +231,222 @@ input[type="number"] {
   padding: 22px;
 }
 .btc-eth-names {
+  /* add flex alignment */
+}
+
+.btc-eth-names h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
 }
 .abbreviations {
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em;
+  color: var(--muted) !important;
 }
+
 .crypto-holding-value {
+  margin-top: 8px;
+}
+
+.crypto-holding-value h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 29px);
+  font-weight: 800;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.crypto-holding-value h5 {
+  margin: 5px 0 0;
+  font-family: var(--font-mono);
+  font-size: clamp(16px, 2.1vw, 19px);
+  font-weight: 600;
 }
 
 .btc-eth-card-wrapper > h4 {
+  margin: 18px 0 0;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  color: var(--muted);
 }
+
 .btc-eth-card-wrapper > h5 {
+  margin: 0;
+  padding-top: 12px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.btc-eth-card-wrapper hr {
+  border: 0;
+  border-top: 1px solid #f1f3f8;
+  margin: 18px 0 0;
 }
 
 /* 7. BTC / ETH DIFFERENCES */
+#btc-card-ledgers,
+#eth-card-ledgers {
+  padding-top: 14px;
+
+  /* add flex layout / space-between / align-center */
+}
+
 #btc-card-ledgers {
   border-top: 4px solid var(--btc);
 }
 #eth-card-ledgers {
   border-top: 4px solid var(--eth);
 }
-#btc-icon {
+
+/* percentage values */
+#btc-card-ledgers > h4,
+#eth-card-ledgers > h4 {
+  margin: 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
 }
-#eth-icon {
+
+#btc-card-ledgers > h4 {
+  color: var(--btc);
+  background: #fff2ec;
+}
+
+#eth-card-ledgers > h4 {
+  color: var(--eth);
+  background: #eaf2fb;
+}
+
+/* BTC / ETH quantity accent */
+#btc-card-ledgers ~ .crypto-holding-value h5 {
+  color: var(--btc);
+}
+
+#eth-card-ledgers ~ .crypto-holding-value h5 {
+  color: var(--eth);
 }
 
 /* 8. TOTAL / REFRESH */
 #total-allocated {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
 }
-.total-allocated-value {
+
+#total-allocated h5 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
 }
+
+#total-allocated h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
 #last-refreshed-wrapper {
-}
-#last-refreshed-wrapper button {
+  margin-top: 14px;
+  background: var(--page-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 13px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #last-refreshed-wrapper h5 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--slate);
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
 }
-#total-allocated h5 {
+
+#last-refreshed-wrapper button {
+  border: 1px solid #d5dbe7;
+  border-radius: 10px;
+  background: var(--surface);
+  padding: 8px 12px;
+
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--indigo);
+
+  cursor: pointer;
 }
-#total-allocated h4 {
+
+#last-refreshed-wrapper button:hover {
+  color: var(--eth);
+  border-color: var(--eth);
 }
 
 /* 9. ERROR */
 #api-error-div {
+  background: #fef3f2;
+  border: 1px solid #ffd6c9;
+  border-radius: 20px;
+  padding: clamp(22px, 3vw, 30px);
 }
+
 #error-message-div {
+  /* add flex alignment */
 }
-#api-error-div button {
+
+#error-message-div h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: #8d0c00;
 }
 
 #api-error-div p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: #8d3a2e;
 }
+
 #api-error-div button {
+  border: 0;
+  border-radius: 11px;
+  padding: 12px 18px;
+  background: var(--btc);
+  color: white;
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+#api-error-div button:hover {
+  background: #e1390b;
 }
 
 /* 10 ICONS */
