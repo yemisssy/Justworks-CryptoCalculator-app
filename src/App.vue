@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
 import AmountToAllocate from "./components/AmountToAllocate.vue";
 import CryptoQuantity from "./components/CryptoQuantity.vue";
 
@@ -44,7 +43,6 @@ const ethQuanityOwned = computed(() => {
 </script>
 
 <template>
-  <!-- <HelloWorld /> -->
   <AmountToAllocate />
   <CryptoQuantity
     :btcAllocatedUSD="btcAllocatedUSD"
