@@ -38,12 +38,12 @@ const ethAllocatedUSD = computed(() => {
 });
 
 const btcQuanityOwned = computed(() => {
-  if (!rates.value.btcRate) return; //I don't think I need to guard for holdings here because 1 is enough
+  if (!rates.value.btcRate) return null;
   return btcAllocatedUSD.value * rates.value.btcRate;
 });
 
 const ethQuanityOwned = computed(() => {
-  if (!rates.value.btcRate) return; //I don't think I need to guard for holdings here because 1 is enough
+  if (!rates.value.ethRate) return null;
   return ethAllocatedUSD.value * rates.value.ethRate;
 });
 </script>

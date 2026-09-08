@@ -1,10 +1,17 @@
 <script setup>
+import { computed } from "vue";
 const props = defineProps({
   name: String,
   symbol: String,
   ethAllocatedUSD: Number,
   ethQuantityOwned: Number,
   ethRate: Number,
+});
+
+const ethPriceInUSD = computed(() => {
+  if (!props.ethRate) return null;
+
+  return 1 / props.ethRate;
 });
 </script>
 
@@ -29,5 +36,6 @@ const props = defineProps({
       usd yet
     </div>
     <hr />
+    <h5>Current Rate 1 {{ symbol }} = ${{ ethPriceInUSD }}</h5>
   </div>
 </template>

@@ -3,11 +3,11 @@ const props = defineProps({
   holding: Number,
 });
 
-const emit = defineEmits(["update: holding"]);
+const emit = defineEmits(["update:holding"]);
 
 const handleHoldingChange = (e) => {
   console.log(e.target.value);
-  emit("update: holding", Number(e.target.value));
+  emit("update:holding", Number(e.target.value));
 };
 </script>
 <template>
