@@ -27,7 +27,7 @@ const loadRates = async () => {
     btcRate: Number(fetchedRates.rate.BTC),
     ethRate: Number(fetchedRates.rate.ETH),
   };
-
+  error.value = null;
   lastRefreshed.value = new Date();
 };
 //UseEffect Equivalent

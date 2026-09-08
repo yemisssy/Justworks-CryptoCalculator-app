@@ -18,6 +18,9 @@ export const fetchCryptoRate = async () => {
       Object.entries(allRates).filter(([key]) => selectedRates.includes(key)),
     );
 
+    if (!neededRates.BTC || !neededRates.ETH) {
+      throw new Error("Required BTC and ETH rates were not returned");
+    }
     return {
       rate: neededRates,
       error: null,

@@ -32,8 +32,8 @@ const ethPriceInUSD = computed(() => {
     </div>
     <div v-else class="crypto-holding-value">
       <icon />
-      <icon /> {{ symbol }} here should be icon & eth symbol since no allocated
-      usd yet
+      <icon /> {{ symbol }} here should be -- icon & eth symbol since no
+      allocated usd yet
     </div>
     <hr />
     <h5>Current Rate 1 {{ symbol }} = ${{ ethPriceInUSD }}</h5>
