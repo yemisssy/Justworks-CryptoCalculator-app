@@ -1,57 +1,153 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --navy: #01013a;
+  --indigo: #29246a;
+  --btc: #f6511e;
+  --eth: #0e57b5;
 
-  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --slate: #5b6172;
+  --muted: #8a90a2;
+  --green: #12a150;
+  --error: #ba1900;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --page-bg: #f4f6fb;
+  --surface: #ffffff;
+  --fill: #eef1f7;
+  --border: #e6eaf2;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --font-display: "Archivo", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  background: var(--page-bg);
+  color: var(--navy);
+  font-family: var(--font-body);
 }
 
 #app {
-  width: 1126px;
-  max-width: 100%;
+  max-width: 1040px;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  padding: clamp(18px, 4vw, 44px);
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+/* 2. HEADER */
+header {
+}
+header h3 {
+}
+#live-coinbase-rate {
 }
 
-input[type="number"] {
-  -moz-appearance: textfield;
+#live-coinbase-rate h5 {
+}
+
+/* 3. INPUT CARD */
+.allocate-amount-wrapper {
+}
+#amount-label {
+}
+#holding-input {
+}
+#invalidholding-error {
+}
+
+/* 4. ALLOCATION */
+#split-bar-label {
+}
+#split-bar-content-wrapper {
+}
+#split-bar {
+}
+.split-bar {
+}
+#btc-bar {
+}
+#eth-bar {
+}
+#split-bar-ratio {
+}
+.bar-ratio {
+}
+#btc-usdallocated-percent {
+}
+#eth-usdallocated-percent {
+}
+
+/* 5. RESULTS LAYOUT */
+#crypto-amount-wrapper {
+}
+
+/* 6. SHARED RESULT CARDS */
+.btc-eth-card-wrapper {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+}
+.btc-eth-names {
+}
+.abbreviations {
+}
+.crypto-holding-value {
+}
+.btc-eth-card-wrapper hr {
+}
+
+.btc-eth-card-wrapper > h4 {
+}
+.btc-eth-card-wrapper > h5 {
+}
+.btc-eth-card-wrapper hr {
+}
+
+/* 7. BTC / ETH DIFFERENCES */
+#btc-card-ledgers {
+  border-top: 4px solid var(--btc);
+}
+#eth-card-ledgers {
+  border-top: 4px solid var(--eth);
+}
+#btc-icon {
+}
+#eth-icon {
+}
+
+/* 8. TOTAL / REFRESH */
+#total-allocated {
+}
+.total-allocated-value {
+}
+#last-refreshed-wrapper {
+}
+#last-refreshed-wrapper button {
+}
+
+#last-refreshed-wrapper h5 {
+}
+#total-allocated h5 {
+}
+#total-allocated h4 {
+}
+
+/* 9. ERROR */
+#api-error-div {
+}
+#error-message-div {
+}
+#api-error-div button {
+}
+
+#api-error-div p {
+}
+#api-error-div button {
+}
+
+/* 10. RESPONSIVE */
+@media (max-width: 768px) {
 }

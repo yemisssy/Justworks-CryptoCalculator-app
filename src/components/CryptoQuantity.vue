@@ -40,7 +40,7 @@ const currentDate = ref(new Date());
     <div id="total-allocated">
       <h5>Total Allocated</h5>
       <div v-if="holding" class="total-allocated-value">
-        <h4>${{ holding }}.00</h4>
+        <h4>${{ holding }}</h4>
       </div>
       <div v-else class="total-allocated-value">
         <icon />
