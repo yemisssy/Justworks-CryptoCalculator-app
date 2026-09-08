@@ -2,9 +2,10 @@
 import { ref, computed, onMounted } from "vue";
 import AmountToAllocate from "./components/AmountToAllocate.vue";
 import CryptoQuantity from "./components/CryptoQuantity.vue";
+import { fetchCryptoRate } from "./ratesApi.js";
 
 //STATES
-const holding = ref(0);
+const holding = ref(null);
 const rates = ref({
   btcRate: null, //Used an object instead of array although they are only two because they are meant to be unqiqe and avoid re-ordering indexing error
   ethRate: null,
@@ -15,30 +16,35 @@ const lastRefreshed = ref(null); // This should be timestamp, date time format
 
 //UseEffect Equivalent
 
-onMounted(() => {
-  //call fetch function
+onMounted(async () => {
+  //call fetch function & update rates values
+  const fetchedRates = await fetchCryptoRate();
+  rates.value = {
+    btcRate: Number(fetchedRates.BTC),
+    ethRate: Number(fetchedRates.ETH),
+  };
 });
 
 const btcAllocatedUSD = computed(() => {
-  if (!holding.value || !rates.btcRate.value) return null; //Question: why return null & not just return?
+  if (!holding.value || !rates.value.btcRate) return null; //Question: why return null & not just return?
 
   return holding.value * 0.7;
 });
 
 const ethAllocatedUSD = computed(() => {
-  if (!holding.value || !rates.ethRate.value) return null;
+  if (!holding.value || !rates.value.ethRate) return null;
 
   return holding.value * 0.3;
 });
 
 const btcQuanityOwned = computed(() => {
   if (!rates.value.btcRate) return; //I don't think I need to guard for holdings here because 1 is enough
-  return btcAllocatedUSD * rates.btcRate.value;
+  return btcAllocatedUSD.value * rates.value.btcRate;
 });
 
 const ethQuanityOwned = computed(() => {
   if (!rates.value.btcRate) return; //I don't think I need to guard for holdings here because 1 is enough
-  return ethAllocatedUSD * rates.ethRate.value;
+  return ethAllocatedUSD.value * rates.value.ethRate;
 });
 </script>
 
@@ -50,7 +56,7 @@ const ethQuanityOwned = computed(() => {
       <h5>Live Coinbase rates</h5>
     </div>
   </header>
-  <AmountToAllocate />
+  <AmountToAllocate :holding="holding" @update:holding="holding = $event" />
   <CryptoQuantity
     :btcAllocatedUSD="btcAllocatedUSD"
     :btcQuantityOwned="btcQuanityOwned"

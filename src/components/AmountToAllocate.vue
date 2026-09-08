@@ -6,13 +6,20 @@ const props = defineProps({
 const emit = defineEmits(["update: holding"]);
 
 const handleHoldingChange = (e) => {
+  console.log(e.target.value);
   emit("update: holding", Number(e.target.value));
 };
 </script>
 <template>
   <div class="allocate-amount-wrapper">
     <label id="amount-label">Amount To Allocate</label>
-    <input :value="holding" @input="handleHoldingChange" />
+    <input
+      id="holding-input"
+      type="number"
+      placeholder="10,000"
+      :value="holding"
+      @input="handleHoldingChange"
+    />
     <hr />
     <h4 id="split-bar-label">FIXED ALLOCATION</h4>
     <div id="split-bar-content-wrapper">
