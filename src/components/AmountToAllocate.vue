@@ -29,14 +29,19 @@ const handleHoldingChange = (e) => {
 <template>
   <div class="allocate-amount-wrapper">
     <label id="amount-label" for="holding-input">Amount To Allocate</label>
-    <input
-      required
-      id="holding-input"
-      type="number"
-      placeholder="10,000"
-      :value="holding"
-      @input="handleHoldingChange"
-    />
+    <div id="holding-amount-field">
+      <span class="input-prefix">$</span>
+      <input
+        required
+        id="holding-input"
+        type="number"
+        placeholder="10,000"
+        :value="holding"
+        @input="handleHoldingChange"
+      />
+      <span class="input-suffix">USD</span>
+    </div>
+
     <div v-if="invalidHolding" id="invalidholding-error">
       <span class="alert-icon" aria-hidden="true">!</span>
       <h5>Enter a valid amount greater than $0.</h5>

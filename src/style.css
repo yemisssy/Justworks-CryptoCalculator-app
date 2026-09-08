@@ -74,22 +74,14 @@ header h3 {
   color: #3a4152;
 }
 
-/* 2. CRYPTO CALCULATOR LAYOUT */
-
-#crypto-calculator-layout {
-  display: flex;
-  justify-content: space-between;
-}
-
-/* 3. INPUT CARD */
+/* 2. INPUT CARD */
 .allocate-amount-wrapper {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: clamp(20px, 2.6vw, 28px);
   box-shadow: 0 1px 3px rgba(1, 1, 58, 0.04);
-
-  /* desktop basis from guide: flex: 1 1 340px */
+  flex: 0.9 1 340px;
 }
 
 #amount-label {
@@ -99,6 +91,9 @@ header h3 {
   font-size: 13px;
   font-weight: 600;
   color: #3a4152;
+}
+#holding-amount-field {
+  position: relative;
 }
 
 #holding-input {
@@ -116,6 +111,26 @@ header h3 {
 
   outline: none;
   transition: border-color 0.12s;
+}
+.input-prefix,
+.input-suffix {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.input-prefix {
+  left: 5px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.input-suffix {
+  right: 16px;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 #holding-input::placeholder {
@@ -167,7 +182,7 @@ input[type="number"] {
   border-radius: 999px;
   overflow: hidden;
   background: var(--fill);
-
+  display: flex;
   /* add display:flex */
 }
 
@@ -188,7 +203,6 @@ input[type="number"] {
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
-  /* add flex / space-between */
 }
 .bar-ratio {
   font-family: var(--font-body);
@@ -226,13 +240,21 @@ input[type="number"] {
   background: var(--eth);
 }
 
-/* 5. RESULTS LAYOUT */
+/* 5.CRYPOT CALCULATOR & RESULTS LAYOUT */
 #crypto-amount-wrapper {
+  flex: 1.3 1 520px;
+  min-width: 0;
 }
+
+#crypto-calculator-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(16px, 2.2vw, 22px);
+}
+
 #crypto-amount-result-wrapper {
   display: flex;
-  gap: 20px; /* this feels hard coded */
-  /* not sure what space to add here or width */
+  gap: clamp(16px, 2vw, 24px);
 }
 /* 6. SHARED RESULT CARDS */
 .btc-eth-card-wrapper {
@@ -240,9 +262,12 @@ input[type="number"] {
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 22px;
+  flex: 1 1 250px;
+  min-width: 240px;
 }
 .btc-eth-names {
   display: flex;
+  gap: 10px;
   /* add flex alignment */
 }
 
@@ -318,10 +343,10 @@ input[type="number"] {
   /* add flex layout / space-between / align-center */
 }
 
-#btc-card-ledgers {
+.btc-card-border-top {
   border-top: 4px solid var(--btc);
 }
-#eth-card-ledgers {
+.eth-card-border-top {
   border-top: 4px solid var(--eth);
 }
 

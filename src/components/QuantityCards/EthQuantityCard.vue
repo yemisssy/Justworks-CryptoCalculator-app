@@ -25,7 +25,7 @@ const formattedEthPriceInUSD = computed(() => {
 </script>
 
 <template>
-  <div class="btc-eth-card-wrapper">
+  <div class="btc-eth-card-wrapper eth-card-border-top">
     <div id="eth-card-ledgers">
       <div class="btc-eth-names">
         <span class="crypto-icon eth-icon" aria-hidden="true">Ξ</span>

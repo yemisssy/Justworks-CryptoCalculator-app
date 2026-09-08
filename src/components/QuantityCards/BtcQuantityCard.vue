@@ -25,7 +25,7 @@ const formattedBtcPriceInUSD = computed(() => {
 </script>
 
 <template>
-  <div class="btc-eth-card-wrapper">
+  <div class="btc-eth-card-wrapper btc-card-border-top">
     <div id="btc-card-ledgers">
       <div class="btc-eth-names">
         <span class="crypto-icon btc-icon" aria-hidden="true">₿</span>
