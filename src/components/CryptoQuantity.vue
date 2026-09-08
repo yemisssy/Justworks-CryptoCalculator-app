@@ -26,15 +26,15 @@ const currentDate = ref(new Date());
       :percentage="70"
       :btcAllocatedUSD="btcAllocatedUSD"
       :btcQuantityOwned="btcQuantityOwned"
-      :rate="btcRate"
+      :btcRate="btcRate"
     />
     <EthQuantityCard
       name="Ethereum"
       symbol="ETH"
       :percentage="30"
-      :btcAllocatedUSD="ethAllocatedUSD"
-      :btcQuantityOwned="ethQuantityOwned"
-      :rate="ethRate"
+      :ethAllocatedUSD="ethAllocatedUSD"
+      :ethQuantityOwned="ethQuantityOwned"
+      :ethRate="ethRate"
     />
     <div id="total-allocated">
       <h5>Total Allocated</h5>

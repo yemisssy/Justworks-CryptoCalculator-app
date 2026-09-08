@@ -11,7 +11,7 @@ const handleHoldingChange = (e) => {
 </script>
 <template>
   <div class="allocate-amount-wrapper">
-    <h4 id="amount-label">Amount To Allocate</h4>
+    <label id="amount-label">Amount To Allocate</label>
     <input :value="holding" @input="handleHoldingChange" />
     <hr />
     <h4 id="split-bar-label">FIXED ALLOCATION</h4>
