@@ -3,10 +3,15 @@ const props = defineProps({
   holding: Number,
 });
 
+const invalidHolding = ref(false);
+
 const emit = defineEmits(["update:holding"]);
 
 const handleHoldingChange = (e) => {
   console.log(e.target.value);
+  if (e.target.value <= 0 || isNaN(Number(e.target.value))) {
+    invalidHolding.value = true;
+  }
   emit("update:holding", Number(e.target.value));
 };
 </script>
@@ -14,12 +19,17 @@ const handleHoldingChange = (e) => {
   <div class="allocate-amount-wrapper">
     <label id="amount-label">Amount To Allocate</label>
     <input
+      required
       id="holding-input"
       type="number"
       placeholder="10,000"
       :value="holding"
       @input="handleHoldingChange"
     />
+    <div v-if="invalidHolding" id="invalidholding-error">
+      <icon />
+      <h5>Enter a valid amount greater than $0.</h5>
+    </div>
     <hr />
     <h4 id="split-bar-label">FIXED ALLOCATION</h4>
     <div id="split-bar-content-wrapper">
