@@ -35,7 +35,7 @@ onMounted(loadRates);
 
 //Numeric calculations
 const btcAllocatedUSD = computed(() => {
-  if (!holding.value) return null; //Question: why return null & not just return?
+  if (!holding.value) return null;
 
   return holding.value * 0.7;
 });
@@ -56,7 +56,7 @@ const ethQuantityOwned = computed(() => {
   return ethAllocatedUSD.value * rates.value.ethRate;
 });
 
-//Formmatting Function
+// Write a reusable formmatting Function
 const formatUsdAndDeci = (value, type) => {
   if (value === null) return null;
 
@@ -96,7 +96,13 @@ const formattedHolding = computed(() => {
 
 <template>
   <header>
-    <p id="product-title">Justworks. | Crypto Allocation</p>
+    <p id="product-title">
+      <span class="justworks-title">
+        Justworks<span class="justworks-dot">.</span>
+      </span>
+      <span class="title-divider">|</span>
+      <span class="crypto-title">Crypto Allocation</span>
+    </p>
     <div
       v-if="!error && rates.btcRate && rates.ethRate"
       id="live-coinbase-rate"
@@ -112,7 +118,7 @@ const formattedHolding = computed(() => {
   </p>
   <div id="crypto-calculator-layout">
     <AmountToAllocate :holding="holding" @update:holding="holding = $event" />
-    <div v-if="error" id="api-error-div">
+    <div v-if="error" id="api-error-div" role="alert">
       <div id="error-message-div">
         <span class="alert-icon" aria-hidden="true">!</span>
         <h4>We couldn't reach Coinbase</h4>

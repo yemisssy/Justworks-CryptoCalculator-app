@@ -11,10 +11,9 @@ export const fetchCryptoRate = async () => {
     }
 
     const data = await response.json();
-    const allRates = data.data.rates; // these are objects
+    const allRates = data.data.rates;
 
     const neededRates = Object.fromEntries(
-      //Question: What is the syntax ([key]) inside the filter? is it a shortand?
       Object.entries(allRates).filter(([key]) => selectedRates.includes(key)),
     );
     if (!neededRates.BTC || !neededRates.ETH) {

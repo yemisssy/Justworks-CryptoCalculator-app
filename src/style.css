@@ -54,11 +54,32 @@ header {
 }
 #product-title {
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.justworks-title {
   font-family: var(--font-display);
   font-size: 22px;
   font-weight: 800;
-  letter-spacing: -0.01em;
   color: var(--navy);
+}
+.justworks-dot {
+  color: var(--btc);
+}
+
+.title-divider {
+  color: var(--border);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.crypto-title {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--slate);
 }
 
 #live-coinbase-rate {
@@ -169,10 +190,6 @@ header {
 
 #holding-input::placeholder {
   color: #aab1c2;
-}
-
-#holding-input:focus {
-  border-color: var(--eth);
 }
 
 #holding-input:focus-visible {
