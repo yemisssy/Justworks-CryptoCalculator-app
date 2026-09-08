@@ -97,14 +97,14 @@ const formattedHolding = computed(() => {
 
 <template>
   <header>
-    <h3>Justworks. | Crypto Allocation</h3>
+    <h3 id="product-title">Justworks. | Crypto Allocation</h3>
     <div id="live-coinbase-rate">
       <span class="status-dot" aria-hidden="true"></span>
       <h5>Live Coinbase rates</h5>
     </div>
   </header>
-  <h1>Allocate your USD across Bitcoin & Ethereum</h1>
-  <p>
+  <h1 id="hero-title">Allocate your USD across Bitcoin & Ethereum</h1>
+  <p id="hero-description">
     Enter an amount and we'll split it with a fixed 70 / 30 ratio — 70% to
     Bitcoin, 30% to Ethereum — using live Coinbase exchange rates.
   </p>
@@ -135,7 +135,7 @@ const formattedHolding = computed(() => {
     />
   </div>
 
-  <h5>
+  <h5 id="footer-disclaimer">
     Exchange rates are retrieved from the public Coinbase API; the timestamp
     reflects when this app last fetched them. For demonstration only — not
     financial advice.
