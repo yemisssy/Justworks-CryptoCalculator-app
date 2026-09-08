@@ -148,6 +148,54 @@ header h3 {
 #api-error-div button {
 }
 
-/* 10. RESPONSIVE */
+/* 10 ICONS */
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  display: inline-block;
+  box-shadow: 0 0 0 3px rgba(18, 161, 80, 0.14);
+}
+
+.crypto-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.btc-icon {
+  color: var(--btc);
+  background: #fff2ec;
+}
+
+.eth-icon {
+  color: var(--eth);
+  background: #eaf2fb;
+}
+
+.alert-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--error);
+  color: white;
+  font-weight: 700;
+}
+
+.empty-value {
+  color: var(--muted);
+}
+
+/* 11. RESPONSIVE */
 @media (max-width: 768px) {
 }

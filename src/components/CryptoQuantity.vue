@@ -43,12 +43,14 @@ const currentDate = ref(new Date());
         <h4>${{ holding }}</h4>
       </div>
       <div v-else class="total-allocated-value">
-        <icon />
+        <span class="empty-value">—</span>
       </div>
     </div>
     <div v-if="lastRefreshed" id="last-refreshed-wrapper">
       <h5>Rate Last Refreshed {{ lastRefreshed.toLocaleString() }}</h5>
-      <button @click="handleRefresh"><icon /> Refresh Rates</button>
+      <button @click="handleRefresh">
+        <span aria-hidden="true">↻</span> Refresh Rates
+      </button>
     </div>
   </div>
 </template>

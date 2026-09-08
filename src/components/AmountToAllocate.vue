@@ -38,7 +38,7 @@ const handleHoldingChange = (e) => {
       @input="handleHoldingChange"
     />
     <div v-if="invalidHolding" id="invalidholding-error">
-      <icon />
+      <span class="alert-icon" aria-hidden="true">!</span>
       <h5>Enter a valid amount greater than $0.</h5>
     </div>
     <hr />

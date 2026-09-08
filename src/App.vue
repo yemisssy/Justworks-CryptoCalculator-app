@@ -95,7 +95,7 @@ const formattedEthQuantity = computed(() => {
   <header>
     <h3>Justworks. | Crypto Allocation</h3>
     <div id="live-coinbase-rate">
-      <icon />
+      <span class="status-dot" aria-hidden="true"></span>
       <h5>Live Coinbase rates</h5>
     </div>
   </header>
@@ -107,14 +107,14 @@ const formattedEthQuantity = computed(() => {
   <AmountToAllocate :holding="holding" @update:holding="holding = $event" />
   <div v-if="error" id="api-error-div">
     <div id="error-message-div">
-      <icon />
+      <span class="alert-icon" aria-hidden="true">!</span>
       <h4>We couldn't reach Coinbase</h4>
     </div>
     <p>
       The exchange rates couldn't be loaded right now. Your amount is safe — try
       fetching the latest rates again.
     </p>
-    <button @click="loadRates"><icon /> Retry</button>
+    <button @click="loadRates"><span aria-hidden="true">↻</span>Retry</button>
   </div>
   <CryptoQuantity
     v-else
