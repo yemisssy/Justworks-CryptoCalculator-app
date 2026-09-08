@@ -56,7 +56,7 @@ const ethQuantityOwned = computed(() => {
   return ethAllocatedUSD.value * rates.value.ethRate;
 });
 
-// Write a reusable formmatting Function
+// Reusable formmatting Function
 const formatUsdAndDeci = (value, type) => {
   if (value === null) return null;
 

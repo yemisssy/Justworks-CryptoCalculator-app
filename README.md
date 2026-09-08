@@ -172,8 +172,8 @@ The input itself is still responsive because it uses `width: 100%` and sits insi
 - invalid input uses `aria-invalid`
 - the validation message is connected to the input through `aria-describedby`
 - validation and API errors can use `role="alert"`
-- keyboard users get a stronger visible focus state through `:focus-visible`
-- the input also keeps its normal `:focus` border state
+- keyboard users get a stronger visible focus state through
+
 - blank input is intentionally allowed, so native `required` is not used
 - interactive actions use real `<button>` elements
 
